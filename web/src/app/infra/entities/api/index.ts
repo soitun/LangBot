@@ -467,8 +467,7 @@ export interface Skill {
   name: string;
   description: string;
   instructions?: string;
-  type: 'skill' | 'workflow';
-  source_type?: 'inline' | 'package';
+  type: 'skill';
   package_root?: string;
   entry_file?: string;
   skill_tools?: SkillToolDef[];

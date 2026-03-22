@@ -6,6 +6,10 @@ import MarketPage from '@/app/home/plugins/components/plugin-market/PluginMarket
 import MCPServerComponent from '@/app/home/plugins/mcp-server/MCPServerComponent';
 import MCPFormDialog from '@/app/home/plugins/mcp-server/mcp-form/MCPFormDialog';
 import MCPDeleteConfirmDialog from '@/app/home/plugins/mcp-server/mcp-form/MCPDeleteConfirmDialog';
+import SkillsComponent, {
+  SkillsComponentRef,
+} from '@/app/home/skills/SkillsComponent';
+import SkillGithubInstallDialog from '@/app/home/skills/SkillGithubInstallDialog';
 import styles from './plugins.module.css';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -121,6 +125,7 @@ export default function PluginConfigPage() {
   const [debugPopoverOpen, setDebugPopoverOpen] = useState(false);
   const [copiedDebugUrl, setCopiedDebugUrl] = useState(false);
   const [copiedDebugKey, setCopiedDebugKey] = useState(false);
+  const [skillGithubDialogOpen, setSkillGithubDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchPluginSystemStatus = async () => {
@@ -173,6 +178,7 @@ export default function PluginConfigPage() {
   }
 
   const pluginInstalledRef = useRef<PluginInstalledComponentRef>(null);
+  const skillsRef = useRef<SkillsComponentRef>(null);
 
   function resetGithubState() {
     setGithubURL('');
@@ -547,6 +553,12 @@ export default function PluginConfigPage() {
             >
               {t('mcp.title')}
             </TabsTrigger>
+            <TabsTrigger
+              value="skills"
+              className="px-6 py-4 cursor-pointer"
+            >
+              {t('skills.title')}
+            </TabsTrigger>
           </TabsList>
 
           <div className="flex flex-row justify-end items-center gap-2">
@@ -650,7 +662,9 @@ export default function PluginConfigPage() {
                   <PlusIcon className="w-4 h-4" />
                   {activeTab === 'mcp-servers'
                     ? t('mcp.add')
-                    : t('plugins.install')}
+                    : activeTab === 'skills'
+                      ? t('skills.createSkill')
+                      : t('plugins.install')}
                   <ChevronDownIcon className="ml-2 w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -668,6 +682,25 @@ export default function PluginConfigPage() {
                     >
                       <PlusIcon className="w-4 h-4" />
                       {t('mcp.createServer')}
+                    </DropdownMenuItem>
+                  </>
+                ) : activeTab === 'skills' ? (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        skillsRef.current?.openCreateDialog();
+                      }}
+                    >
+                      <PlusIcon className="w-4 h-4" />
+                      {t('skills.createSkill')}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        setSkillGithubDialogOpen(true);
+                      }}
+                    >
+                      <Github className="w-4 h-4" />
+                      {t('skills.importFromGithub')}
                     </DropdownMenuItem>
                   </>
                 ) : (
@@ -735,6 +768,12 @@ export default function PluginConfigPage() {
               setMcpSSEModalOpen(true);
             }}
           />
+        </TabsContent>
+        <TabsContent
+          value="skills"
+          className="flex-1 overflow-y-auto mt-0"
+        >
+          <SkillsComponent ref={skillsRef} />
         </TabsContent>
       </Tabs>
 
@@ -1034,6 +1073,14 @@ export default function PluginConfigPage() {
           setEditingServerName(null);
           setIsEditMode(false);
           setRefreshKey((prev) => prev + 1);
+        }}
+      />
+
+      <SkillGithubInstallDialog
+        open={skillGithubDialogOpen}
+        onOpenChange={setSkillGithubDialogOpen}
+        onSuccess={() => {
+          skillsRef.current?.refreshSkillList();
         }}
       />
     </div>
