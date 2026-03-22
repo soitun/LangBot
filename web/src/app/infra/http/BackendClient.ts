@@ -1035,24 +1035,9 @@ export class BackendClient extends BaseHttpClient {
   public dismissSurvey(surveyId: string): Promise<object> {
     return this.post('/api/v1/survey/dismiss', { survey_id: surveyId });
   }
-}
 
-export interface SurveyQuestion {
-  id: string;
-  type: 'single_select' | 'multi_select' | 'text';
-  title: Record<string, string>;
-  subtitle?: Record<string, string>;
-  required: boolean;
-  options?: SurveyOption[];
-  placeholder?: Record<string, string>;
-  max_length?: number;
-}
-
-export interface SurveyOption {
-  id: string;
-  label: Record<string, string>;
-  has_input?: boolean;
   // ============ Skills API ============
+
   public getSkills(params?: {
     skill_type?: string;
     is_enabled?: boolean;
@@ -1129,4 +1114,21 @@ export interface SurveyOption {
     const params = pipelineUuid ? { pipeline_uuid: pipelineUuid } : {};
     return this.get('/api/v1/skills/index', params);
   }
+}
+
+export interface SurveyQuestion {
+  id: string;
+  type: 'single_select' | 'multi_select' | 'text';
+  title: Record<string, string>;
+  subtitle?: Record<string, string>;
+  required: boolean;
+  options?: SurveyOption[];
+  placeholder?: Record<string, string>;
+  max_length?: number;
+}
+
+export interface SurveyOption {
+  id: string;
+  label: Record<string, string>;
+  has_input?: boolean;
 }
