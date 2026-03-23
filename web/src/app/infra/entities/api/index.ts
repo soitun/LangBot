@@ -478,15 +478,6 @@ export interface Skill {
   updated_at?: string;
 }
 
-export interface SkillPipelineBinding {
-  id?: number;
-  skill_uuid: string;
-  pipeline_uuid: string;
-  priority?: number;
-  is_enabled?: boolean;
-  created_at?: string;
-}
-
 export interface ApiRespSkills {
   skills: Skill[];
 }
@@ -495,9 +486,3 @@ export interface ApiRespSkill {
   skill: Skill;
 }
 
-export interface ApiRespPipelineSkills {
-  skills: Array<{
-    skill: Skill;
-    binding: SkillPipelineBinding;
-  }>;
-}
