@@ -1059,9 +1059,7 @@ export class BackendClient extends BaseHttpClient {
 
   // ============ Skills API ============
 
-  public getSkills(params?: {
-    is_enabled?: boolean;
-  }): Promise<ApiRespSkills> {
+  public getSkills(params?: { is_enabled?: boolean }): Promise<ApiRespSkills> {
     return this.get('/api/v1/skills', params);
   }
 

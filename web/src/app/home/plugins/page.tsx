@@ -553,10 +553,7 @@ export default function PluginConfigPage() {
             >
               {t('mcp.title')}
             </TabsTrigger>
-            <TabsTrigger
-              value="skills"
-              className="px-6 py-4 cursor-pointer"
-            >
+            <TabsTrigger value="skills" className="px-6 py-4 cursor-pointer">
               {t('skills.title')}
             </TabsTrigger>
           </TabsList>
@@ -769,10 +766,7 @@ export default function PluginConfigPage() {
             }}
           />
         </TabsContent>
-        <TabsContent
-          value="skills"
-          className="flex-1 overflow-y-auto mt-0"
-        >
+        <TabsContent value="skills" className="flex-1 overflow-y-auto mt-0">
           <SkillsComponent ref={skillsRef} />
         </TabsContent>
       </Tabs>
