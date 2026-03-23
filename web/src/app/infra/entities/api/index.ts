@@ -464,9 +464,6 @@ export interface Skill {
   entry_file?: string;
   sandbox_timeout_sec?: number;
   sandbox_network?: boolean;
-  requires_tools?: string[];
-  requires_kbs?: string[];
-  requires_skills?: string[];
   auto_activate?: boolean;
   trigger_keywords?: string[];
   is_enabled?: boolean;
@@ -485,4 +482,3 @@ export interface ApiRespSkills {
 export interface ApiRespSkill {
   skill: Skill;
 }
-
