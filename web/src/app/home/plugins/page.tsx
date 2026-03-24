@@ -76,6 +76,8 @@ interface GithubRelease {
   published_at: string;
   prerelease: boolean;
   draft: boolean;
+  source_type?: 'release' | 'tag' | 'branch';
+  archive_url?: string;
 }
 
 interface GithubAsset {
@@ -255,6 +257,9 @@ export default function PluginConfigPage() {
         githubOwner,
         githubRepo,
         release.id,
+        release.tag_name,
+        release.source_type,
+        release.archive_url,
       );
       setGithubAssets(result.assets);
 
